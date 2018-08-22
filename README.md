@@ -8,6 +8,8 @@ This bot was profitable for 2-3 weeks, and then not profitable after that. I enj
 
 USE AT YOUR OWN RISK - THIS BOT SOMETIMES MAKES MONEY, AND SOMETIMES LOSES MONEY. YOU ARE 100% RESPONSIBLE FOR YOUR OWN DECISIONS AND ACTIONS. THIS CODE IS PRESENTED AS IS, WITH NO WARRANTIES WHATSOEVER.
 
+IDEX is a decentralized server and requires a private key for trading. Managing security is up to you. I'd recommend using this as a starting point to customize your own code and strategies. As always, never run code you don't fully understand.
+
 # How it Works
 
 The bot works like this:
@@ -22,13 +24,14 @@ The bot works like this:
 The idea behind the average wave size is to place buy orders just below the size of an average order. This way, if a large-ish buy order is placed, it will hit all the orders above us and our order. This gives us a better price than staying at the top of the order book, while still letting our order get filled.
 
 For example, let's say the order book looks like this:
-
+```
 0.00045, 1 ETH
 0.00044, 1 ETH
 0.00043, 1 ETH
 0.00042, 1 ETH
 0.00041.00001, 1 ETH <-- Our buy order
 0.00041, 1.5 ETH
+```
 
 If you input an average wave size of 5 ETH, if will see that the .00041 bid will put the order book above 5 ETH. In other words, we want an order to be filled if a 5 ETH sell order hits, so the bot automatically calculates where in the order book it needs to sit to have that order fulfilled.
 
