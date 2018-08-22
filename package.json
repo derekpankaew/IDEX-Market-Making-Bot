@@ -1,0 +1,24 @@
+{
+  "name": "notes-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Derek Pankaew",
+  "license": "ISC",
+  "dependencies": {
+    "alert-node": "^1.2.1",
+    "axios": "^0.18.0",
+    "big-integer": "^1.6.32",
+    "big.js": "^5.1.2",
+    "ethereumjs-util": "^5.2.0",
+    "lodash": "^4.17.10",
+    "mathjs": "^5.0.1",
+    "request": "^2.87.0",
+    "web3-utils": "^1.0.0-beta.34",
+    "xmlhttprequest": "^1.8.0",
+    "yargs": "^4.8.1"
+  }
+}

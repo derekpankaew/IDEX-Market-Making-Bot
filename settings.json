@@ -1,0 +1,13 @@
+{
+    "myAddress": "0x780d7ad176502057b204966ecc9a61822758e52e",
+    "privateKey": "9f6c1d8c313245d9779cced7b2e21bf4e7475b806afabae9c37a9d192de0c524",
+    "target_contract": "0xb9ef770b6a5e12e45983c5d80545258aa38f3b78",
+    "target_pair": "ETH_ZCN",
+    "target_token": "ZCN",
+    "precision": 10,
+    "stoploss": 0.000929,
+    "average_wave_size": 5.5,
+    "increment_amount": 0.0000000001,
+    "IDEXcontractAddress": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208"
+
+}
