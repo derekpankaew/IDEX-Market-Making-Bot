@@ -8,7 +8,7 @@ This bot was profitable for 2-3 weeks, and then not profitable after that. I enj
 
 USE AT YOUR OWN RISK - THIS BOT SOMETIMES MAKES MONEY, AND SOMETIMES LOSES MONEY. YOU ARE 100% RESPONSIBLE FOR YOUR OWN DECISIONS AND ACTIONS. THIS CODE IS PRESENTED AS IS, WITH NO WARRANTIES WHATSOEVER.
 
-IDEX is a decentralized server and requires a private key for trading. Managing security is up to you. I'd recommend using this as a starting point to customize your own code and strategies. As always, never run code you don't fully understand.
+IDEX is a decentralized server and requires a private key for trading. Obviously, storing a private key on a node server has its own risks, and managing that security is up to you. I'd recommend using this as a starting point to customize your own code and strategies. As always, never run code you don't fully understand.
 
 # How it Works
 
