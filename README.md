@@ -1,6 +1,6 @@
 # Overview
 
-This is a market making bot for IDEX. It's built in NodeJS, and runs from the command line.
+This is a market making bot for IDEX. It's built in NodeJS, and runs from the command line. You can run it from any linux distro.
 
 This bot was profitable for 2-3 weeks, and then not profitable after that. I enjoyed building it, but lost interest in continuing to refine it, so I decided to open source it instead.
 
