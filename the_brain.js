@@ -2,7 +2,7 @@
 ////////  Version   ///////////
 ///////////////////////////////
 
-// Version 1.0, July 6
+// Version 1.0, July 6, 2018
 
 ///////////////////////////////
 ////////  Constants   /////////
@@ -50,6 +50,10 @@ var my_balance_tokens = 0;
 ///////  Run the Code   ///////
 ///////////////////////////////
 
+// This is the "primary loop", which executes every 30 seconds:
+// 1) It updates the price and order book data from the server,
+// 2) It checks for existing orders, and adjusts bids if needed
+// 3) It places new orders if none exist already
 
 console2.log('\n' + "Timestamp: " + timestamp.timestamp() + '\n');
 update_data().then(() => { maintenance() }).then(() => { new_orders() });
@@ -60,7 +64,7 @@ setInterval(() => {
         () => { maintenance() }).then(
         () => { new_orders() });
 
-},40000);
+},30000);
 
 
 
@@ -71,7 +75,7 @@ setInterval(() => {
 
 async function check_if_order_is_at_top(orderHash, ticker) {
 
-    // Returns either a true or a false, depending on whether or not we're the top hash
+    // Returns either a true or a false, depending on whether or not we're the top order
 
     var URL = "https://api.idex.market/returnOrderBook?market=" + ticker; // Prep the URL
     var highest_hash; // Initialize
@@ -92,16 +96,16 @@ async function check_if_order_is_at_top(orderHash, ticker) {
 
 };
 
+// Returns lowest ask and highest bid, as an array
 
 function get_latest_bid_ask(data) {
 
     lowest_ask = data.asks[0].price; // Lowest ask
     highest_bid = data.bids[0].price; // Highest bid
-    //    console.log("The highest bid is: " + highest_bid);
-    //    console.log("The lowest ask is: " + lowest_ask);
 
 };
 
+// Gets the entire order book
 
 async function get_order_book(ticker) {
 
@@ -111,6 +115,8 @@ async function get_order_book(ticker) {
 
 };
 
+// Gets the trade history for a given market
+
 async function get_trade_history(ticker) {
 
     var URL = "https://api.idex.market/returnTradeHistory?market=" + ticker; // Prep the URL
@@ -119,6 +125,8 @@ async function get_trade_history(ticker) {
     console2.log(`The last order price is: ${last_order_price}`);
     return response.data;
 };
+
+// Gets the balances for a specific address
 
 async function get_balances(address) {
 
@@ -140,6 +148,8 @@ async function get_balances(address) {
 
     return response.data;
 };
+
+// Locates orders belonging to your ETH address, from within a given order book
 
 function find_my_orders_in_book(order_book) {
 
@@ -262,6 +272,8 @@ function find_my_orders_in_book(order_book) {
     return myOrders;
 };
 
+// Updates all data - order books, trade history, balances, etc.
+
 async function update_data() {
 
     order_book = await get_order_book(target_pair);
@@ -273,6 +285,9 @@ async function update_data() {
     balances = await get_balances(address);
     await console2.log("Data updated!")
 };
+
+// Follows the maintenance decision tree on the sell order side.
+// Checks for: If orders exist, if orders need to be bumped higher, if a stop loss has been hit
 
 async function maintenance_check_sell_orders() {
 
@@ -316,6 +331,9 @@ async function maintenance_check_sell_orders() {
     };
 };
 
+// Follows the maintenance decision tree on the buy order side.
+// Checks for: If orders exist, if orders need to be bumped higher, if a stop loss has been hit
+
 async function maintenance_check_buy_orders() {
 
     if (myOrders.bids.count != 0) { // If I have at least 1 order on the books
@@ -348,6 +366,8 @@ async function maintenance() {
 
 };
 
+// Follows the new order decision tree on the buy side.
+
 async function new_buy_orders() {
 
     if (myOrders.bids.count == 0) { // If I have no current buy orders
@@ -374,6 +394,8 @@ async function new_buy_orders() {
         console2.log(`I already have a buy order on the books.`);
     };
 };
+
+// Follows the new order decision tree on the sell side
 
 async function new_sell_orders() {
 
@@ -408,22 +430,4 @@ async function new_orders() {
     await new_sell_orders();
 
 };
-
-/*
-
-Do I have a sell order on the books?
-If YES, continue. If NO, end.
-
-Do I have 0.15 in tokens?
-If YES, continue. If NO, end.
-
-Is the price above Stoploss?
-If YES, continue. If NO, end. <-- For now, will implement emergency sell later.
-
-Is my ask within the next Wave?
-If YES, end. If NO, cancel and rebuy. 
-
-
-
-*/
 

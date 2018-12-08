@@ -1,4 +1,22 @@
 ///////////////////////////////
+///////  Description   ////////
+///////////////////////////////
+
+/*
+
+This file defines utility functions for interacting with IDEX's servers.
+Specifically, it exports 3 functions:
+1. Execute buy order,
+2. Execute sell order,
+3. Cancel existing order
+
+IDEX is a decentralized exchange, so interacting with the API requires
+using private key signing and transaction hashing. These functions
+abstract that complexity, so the_brain.js can focus on trading.
+
+*/
+
+///////////////////////////////
 ///////  Constants   //////////
 ///////////////////////////////
 
@@ -65,6 +83,9 @@ function execute_sell_order(tokenPrice, howMuchInETH, tokenSell, sellPrecision) 
 
 };
 
+// Takes all the transaction data as parameters
+// formats it into JSON, hashes and signs it, and sends it to IDEX servers
+
 function send_the_transaction(tokenBuy,amountBuy,tokenSell,amountSell,address,nonce,expires,v,r,s,type) {
     if (type == "bid") {
         var file = 'order_hash_bid.json'
@@ -117,6 +138,8 @@ function send_the_transaction(tokenBuy,amountBuy,tokenSell,amountSell,address,no
     })
 
 }
+
+// Uses private key to hash and sign the transaction
 
 function hash_and_sign(contractAddress, tokenBuy, amountBuy, tokenSell, amountSell, expires, nonce, address) {
 
@@ -216,6 +239,11 @@ async function cancel_order(orderHash) {
 
 };
 
+// Nonce is a number which increases by 1 in each transcation
+// This prevers re-use of a signed transaction. In other words, every transaction
+// will have a different signature because at least 1 part of the data is different
+// each time.
+
 function get_and_add_nonce() {
 
     var current_nonce = fs.readFileSync('nonce.json', "utf8");
@@ -233,6 +261,10 @@ function get_and_add_nonce() {
     return string_nonce;
 
 };
+
+// Allows you to input the amount you want to buy in ETH, and get back
+// the amount of tokens you want to buy. Lets us standardize our buy
+// orders by expressing it in ETH rather than the token we're buying.
 
 function calculate_amount_buy (tokenPrice, howMuchInETH, sellPrecision) {
 
