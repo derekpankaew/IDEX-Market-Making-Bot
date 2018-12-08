@@ -75,7 +75,7 @@ To setup the bot, input your information as follows in settings.json:
 
 # Running the Bot
 
-To run the bot, just type:
+To run the bot, just run it via node.js:
 
 `node the_brain.js`
 
