@@ -4,15 +4,20 @@ This is a market making bot for IDEX. It's built in NodeJS, and runs from the co
 
 This bot was somewhat profitable in flat markets, and then not profitable during and after the crash. I enjoyed building it, so I decided to open source it instead of shutting it down.
 
-![IDEX](https://statrader.com/wp-content/uploads/2018/08/idex-logo-big.png "IDEX")
-
 # How it Works
+
+The bot uses a tree of if-then statements to determine whether it should buy or sell. The tree is as follows:
+
+![Decision tree of how the bot works](/node_modules/decision-tree.jpg?raw=true "Decision Tree")
+
+# Overall Strategy Description
 
 The bot works like this:
 
 - It takes the "average wave size" as a parameter (see below.)
-- It sets your bid at just above the avg wave size, on the buy side, or the reverse on the sell side.
+- It sets your bid at just above the avg wave size, on the buy side, or just under the wave size on the sell side.
 - If it successfully buys, it immediately creates an order on the sell side.
+- You can set the minimum expected spread the bot needs to trade.
 - It repeats until you kill the script.
 
 # Average Wave Size
@@ -39,7 +44,7 @@ Nonce must be set to a number higher than the one on your account. Check your ac
 
 https://api.idex.market/returnNextNonce?address=
 
-## settings.json
+## Configuring Your Settings
 
 To setup the bot, input your information as follows in settings.json:
 
@@ -53,6 +58,14 @@ To setup the bot, input your information as follows in settings.json:
     "average_wave_size": See above
     "increment_amount": By how much you wish to increment to stay above or below a bid
     "IDEXcontractAddress": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208"
+
+# Running the Bot
+
+To run the bot, just type:
+
+`node the_brain.js`
+
+This will start the script running using the settings you specified.
 
 # Feedback
 
