@@ -1,6 +1,6 @@
 {
-    "myAddress": ,
-    "privateKey": ,
+    "myAddress": "YOUR_ETH_ADDRESS_HERE",
+    "privateKey": "PRIVATE_KEY_HERE",
     "target_contract": "0xb9ef770b6a5e12e45983c5d80545258aa38f3b78",
     "target_pair": "ETH_ZCN",
     "target_token": "ZCN",

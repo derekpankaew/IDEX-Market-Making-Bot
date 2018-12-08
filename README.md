@@ -22,7 +22,9 @@ The bot works like this:
 
 # Average Wave Size
 
-The idea behind the average wave size is to place buy orders just below the size of an average order. This way, if a large-ish buy order is placed, it will hit all the orders above us and our order. This gives us a better price than staying at the top of the order book, while still letting our order get filled.
+We can maximize our spread by **not** staying at the top of the order book. 
+
+We place orders that are slightly smaller than the average order. This way, if a buy (or sell) order is placed, it will hit all the orders above us, plus our order. This gives us a better price than staying at the top of the order book, while still letting our order get filled.
 
 For example, let's say the order book looks like this:
 ```
@@ -30,13 +32,25 @@ For example, let's say the order book looks like this:
 0.00044, 1 ETH
 0.00043, 1 ETH
 0.00042, 1 ETH
-0.00041.00001, 1 ETH <-- Our buy order
+0.0004100001, 1 ETH <-- Our buy order
 0.00041, 1.5 ETH
 ```
 
-If you input an average wave size of 5 ETH, if will see that the .00041 bid will put the order book above 5 ETH. In other words, we want an order to be filled if a 5 ETH sell order hits, so the bot automatically calculates where in the order book it needs to sit to have that order fulfilled.
+If a trader comes along and places a 5 ETH order, it will still hit our order. We're getting a 9% better price than the person at the top of the order book, giving us a much better spread.
 
-# Setup
+You can set the average wave size for each market, based on how large orders in that market tends to be. The bot will automatically calculate where on the order book it needs to sit to be within the average wave (buy / sell) size.
+
+# Key Files
+
+There are three key files to this bot:
+
+1. idex_sign_transaction.js - This manages all the transaction related code. Since IDEX is a decentralized exchange, all transactions need to be hashed and signed with a private key. The functions exported here handle all of that complexity.
+
+2. the_brain.js - This handles the primary trading logic. It also handles gathering data from the server, to make trading decisions.
+
+3. settings.json - This is where you add the settings needed to operate the bot. See below.
+
+# Setting Up the Bot
 
 ## nonce.json
 
