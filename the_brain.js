@@ -31,7 +31,7 @@ var target_token = settings.target_token;
 var precision = settings.precision;
 var stoploss = settings.stoploss;
 var average_wave_size = settings.average_wave_size;
-var order_book_depth = 40;
+var order_book_depth = 100;
 const address = settings.myAddress; // My wallet address
 
 var increment_amount = settings.increment_amount;
