@@ -31,6 +31,7 @@ var target_token = settings.target_token;
 var precision = settings.precision;
 var stoploss = settings.stoploss;
 var average_wave_size = settings.average_wave_size;
+var order_book_depth = 40;
 const address = settings.myAddress; // My wallet address
 
 var increment_amount = settings.increment_amount;
@@ -77,7 +78,7 @@ async function check_if_order_is_at_top(orderHash, ticker) {
 
     // Returns either a true or a false, depending on whether or not we're the top order
 
-    var URL = "https://api.idex.market/returnOrderBook?market=" + ticker; // Prep the URL
+    var URL = "https://api.idex.market/returnOrderBook?count=" + order_book_depth + "&market=" + ticker; // Prep the URL
     var highest_hash; // Initialize
 
     var response = await axios.get(URL);
@@ -109,7 +110,7 @@ function get_latest_bid_ask(data) {
 
 async function get_order_book(ticker) {
 
-    var URL = "https://api.idex.market/returnOrderBook?market=" + ticker; // Prep the URL
+    var URL = "https://api.idex.market/returnOrderBook?count=" + order_book_depth + "&market=" + ticker; // Prep the URL
     var response = await axios.get(URL);
     return response.data;
 
@@ -157,9 +158,8 @@ async function get_balances(address) {
 // Locates orders belonging to your ETH address, from within a given order book
 
 function find_my_orders_in_book(order_book) {
-
+  
     // Currently just returns the first order found
-
     var first_ask_order_number = 0;
     var first_bid_order_number = 0;
     var volume_above_ask = 0;
@@ -168,41 +168,30 @@ function find_my_orders_in_book(order_book) {
     bid_count = 0;
 
     // Calculates the number of asks this address has in this book + first bid position
-
     for (var i = 0; i < order_book.asks.length; i++) {
-        //        console.log("Starting loop " + i + " where the address is " + order_book.asks[i].params.user);
-        if (address == order_book.asks[i].params.user) {
+      console.log("Starting loop " + i + " where the address is " + order_book.asks[i].params.user);
+      if (address == order_book.asks[i].params.user) {
 
-            if (first_ask_order_number == 0) { 
-                first_ask_order_number = i;
-                //                console.log ("first_ask_order_number is now " + first_ask_order_number);
-            };
-            //            else {
-            //                console.log ("first_ask_order_number is " + first_ask_order_number)
-            //            };
-
-            ask_count++
-            //            console.log ("Incrementing ask_count, now " + ask_count);
-
-        }; 
-        //        else {
-        //            console.log("The addresses didn't match");
-        //        };
-
+        if (first_ask_order_number == 0) { 
+          first_ask_order_number = i;
+          console.log ("first_ask_order_number is now " + first_ask_order_number);
+        } else {
+          console.log ("first_ask_order_number is " + first_ask_order_number)
+        };
+        ask_count++
+      } else {
+        console.log("The addresses didn't match");
+      };
     };
 
     // Calculates the number of bids this address has in this book + first bid position
-
-
     for (var i = 0; i < order_book.bids.length; i++) {
-        if (address == order_book.bids[i].params.user) {
-
-            if (first_bid_order_number == 0) { first_bid_order_number = i};
-
-            bid_count++
-
-        };
-
+      if (address == order_book.bids[i].params.user) {
+        if (first_bid_order_number == 0) { 
+          first_bid_order_number = i
+        }
+        bid_count++
+      }
     };
 
     // Calculates the volume in ETH above the specified address
@@ -253,7 +242,6 @@ function find_my_orders_in_book(order_book) {
 
 
 
-
     myOrders = {
         asks: {
             count: ask_count,
@@ -283,6 +271,8 @@ async function update_data() {
 
     order_book = await get_order_book(target_pair);
     my_order_data = await find_my_orders_in_book(order_book);
+    console.log(order_book);
+    console.log(my_order_data);
     await get_latest_bid_ask(order_book);
     //    await console.log("Order book loaded");
     trade_history = await get_trade_history(target_pair);
@@ -295,7 +285,6 @@ async function update_data() {
 // Checks for: If orders exist, if orders need to be bumped higher, if a stop loss has been hit
 
 async function maintenance_check_sell_orders() {
-
     if (myOrders.asks.count != 0) { // If I have at least 1 order on the books
         if (((my_balance_tokens + parseFloat(myOrders.asks.orderAmount)) * last_order_price) > 0.15) { // If I have at least 0.15 ETH worth of tokens
             if (last_order_price > stoploss) { // If the price is higher than the stop loss
