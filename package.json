@@ -14,7 +14,7 @@
     "big-integer": "^1.6.32",
     "big.js": "^5.1.2",
     "ethereumjs-util": "^5.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "mathjs": "^5.0.1",
     "request": "^2.87.0",
     "web3-utils": "^1.0.0-beta.34",

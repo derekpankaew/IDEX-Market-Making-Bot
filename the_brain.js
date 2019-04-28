@@ -10,11 +10,11 @@
 
 
 const idex = require('./idex_sign_transaction.js');
-const timestamp = require('./node_modules/timestamp.js');
+const timestamp = require('./includes/timestamp.js');
 const fs = require('fs');
 const request = require('request');
 const axios = require('axios');
-const console2 = require("./node_modules/console2.js");
+const console2 = require("./includes/console2.js");
 const settings = JSON.parse(fs.readFileSync('settings.json', "utf8"));
 
 var highest_bid,lowest_ask,my_next_bid,hash_to_cancel,orderHash,are_we_at_the_top,order_book,trade_history,balances,myOrders,ask_count,bid_count,last_order_price;

@@ -20,12 +20,12 @@ abstract that complexity, so the_brain.js can focus on trading.
 ///////  Constants   //////////
 ///////////////////////////////
 
-const console2 = require("./node_modules/console2.js");
+const console2 = require("./includes/console2.js");
 const fs = require('fs');
 const Big = require('big.js');
 const settings = JSON.parse(fs.readFileSync('settings.json', "utf8"));
 const idex = require('./idex_sign_transaction.js')
-const timestamp = require('./node_modules/timestamp.js')
+const timestamp = require('./includes/timestamp.js')
 const request = require('request');
 const { soliditySha3 } = require('web3-utils');
 const {
