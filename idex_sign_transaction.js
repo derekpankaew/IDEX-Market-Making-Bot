@@ -56,7 +56,6 @@ function execute_buy_order(tokenPrice, howMuchInETH, tokenBuy, sellPrecision) {
   
     console2.log("execute_buy_order Inputs: ");
     console2.log([tokenPrice, howMuchInETH, tokenBuy, sellPrecision]);
-    return false;
 
     var amountBuy = calculate_amount_buy(tokenPrice, howMuchInETH, sellPrecision);
     var tokenSell = "0x0000000000000000000000000000000000000000"; // Default address for ETH
@@ -75,7 +74,6 @@ function execute_sell_order(tokenPrice, howMuchInETH, tokenSell, sellPrecision) 
 
     console2.log("execute_sell_order Inputs: ");
     console2.log([tokenPrice, howMuchInETH, tokenSell, sellPrecision]);
-    return false;
 
     var amountSell = calculate_amount_buy(tokenPrice, howMuchInETH, sellPrecision);
     var tokenBuy = "0x0000000000000000000000000000000000000000"; // Default address for ETH
@@ -97,7 +95,6 @@ function execute_sell_order(tokenPrice, howMuchInETH, tokenSell, sellPrecision) 
 function send_the_transaction(tokenBuy,amountBuy,tokenSell,amountSell,address,nonce,expires,v,r,s,type) {
     console2.log("send_the_transaction inputs:")
     console2.log(tokenBuy,amountBuy,tokenSell,amountSell,address,nonce,expires,v,r,s,type);
-    return false;
     
     if (type == "bid") {
         var file = 'order_hash_bid.json'
