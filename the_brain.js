@@ -138,14 +138,19 @@ async function get_balances(address) {
 
     try {
         my_balance_tokens = response.data[target_token];
-        my_balance_tokens = parseFloat(my_balance_tokens);
+        if ( typeof my_balance_tokens !== 'undefined' && my_balance_tokens ) {
+          my_balance_tokens = parseFloat(my_balance_tokens);
+        } else {
+          throw("Not valid value")
+        }
     }
     catch(e) {
         console2.log("Error: You have none of this token in your balances.");
+        my_balance_tokens = 0;
+        response.data[target_token] = 0;
     }
 
     console2.log(`Current ${target_token} balance: ${my_balance_tokens} \nCurrent ETH balance: ${my_balance_ETH}`);
-
     return response.data;
 };
 
