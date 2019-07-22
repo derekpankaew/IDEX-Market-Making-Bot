@@ -1,0 +1,8 @@
+{
+    "privateKey": "PRIVATE_KEY_HERE",
+    "targetPair": "ETH_ZCN",
+    "stoploss": 0.000929,
+    "averageWaveSize": 5.5,
+    "incrementAmount": 0.0000000001,
+    "dryRun": true
+}

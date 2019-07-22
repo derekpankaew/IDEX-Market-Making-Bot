@@ -1,24 +1,32 @@
 {
-  "name": "notes-node",
+  "name": "idex-mmbot",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "IDEX Market Maker Bot",
+  "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-ts": "npx tsc",
+    "start": "node dist/main.js",
+    "start-robot": "yarn build-ts && yarn start",
+    "test": "npx mocha test/unit/* -r ts-node/register"
   },
   "author": "Derek Pankaew",
   "license": "ISC",
   "dependencies": {
-    "alert-node": "^1.2.1",
     "axios": "^0.18.0",
-    "big-integer": "^1.6.32",
     "big.js": "^5.1.2",
     "ethereumjs-util": "^5.2.0",
     "lodash": "^4.17.11",
-    "mathjs": "^5.0.1",
-    "request": "^2.87.0",
-    "web3-utils": "^1.0.0-beta.34",
-    "xmlhttprequest": "^1.8.0",
-    "yargs": "^4.8.1"
+    "web3-utils": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "@types/big.js": "^4.0.5",
+    "@types/chai": "^4.1.7",
+    "@types/ethereumjs-util": "^5.2.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.8",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   }
 }
