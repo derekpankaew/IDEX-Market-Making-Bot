@@ -1,3 +1,8 @@
+# TODO
+
+Do not use this code directoly.
+You should test this first before running it at production environment.
+
 # Overview
 
 This is a market making bot for IDEX. It's built in NodeJS, and runs from the command line. You can run it from any linux distribution.
@@ -8,7 +13,7 @@ This bot was somewhat profitable in flat markets, and then not profitable during
 
 The bot uses a tree of if-then statements to determine whether it should buy or sell. The tree is as follows:
 
-![Decision tree of how the bot works](/node_modules/decision-tree.jpg?raw=true "Decision Tree")
+![Decision tree of how the bot works](/resources/decision-tree.jpg?raw=true "Decision Tree")
 
 # Overall Strategy Description
 
@@ -22,11 +27,12 @@ The bot works like this:
 
 # Average Wave Size
 
-We can maximize our spread by **not** staying at the top of the order book. 
+We can maximize our spread by **not** staying at the top of the order book.
 
 We place orders that are slightly smaller than the average order. This way, if a buy (or sell) order is placed, it will hit all the orders above us, plus our order. This gives us a better price than staying at the top of the order book, while still letting our order get filled.
 
 For example, let's say the order book looks like this:
+
 ```
 0.00045, 1 ETH
 0.00044, 1 ETH
@@ -40,44 +46,23 @@ If a trader comes along and places a 5 ETH order, it will still hit our order. W
 
 You can set the average wave size for each market, based on how large orders in that market tends to be. The bot will automatically calculate where on the order book it needs to sit to be within the average wave (buy / sell) size.
 
-# Key Files
-
-There are three key files to this bot:
-
-1. idex_sign_transaction.js - This manages all the transaction related code. Since IDEX is a decentralized exchange, all transactions need to be hashed and signed with a private key. The functions exported here handle all of that complexity.
-
-2. the_brain.js - This handles the primary trading logic. It also handles gathering data from the server, to make trading decisions.
-
-3. settings.json - This is where you add the settings needed to operate the bot. See below.
-
 # Setting Up the Bot
-
-## nonce.json
-
-Nonce must be set to a number higher than the one on your account. Check your account's nonce at:
-
-https://api.idex.market/returnNextNonce?address=
 
 ## Configuring Your Settings
 
-To setup the bot, input your information as follows in settings.json:
+To setup the bot, input your information as follows in `resources/settings.json`:
 
-    "myAddress": Your address
     "privateKey": Your private key
-    "target_contract": The address of the contract you wish to trade (ETH hash, starting with 0x)
     "target_pair": The pair you wish to trade, in string - "ETH_ZCN" for example
-    "target_token": "ZCN", -- The latter half of the above
-    "precision": 10, -- You can get this from https://api.idex.market/returnCurrencies
     "stoploss": The level at which you stop buying
     "average_wave_size": See above
     "increment_amount": By how much you wish to increment to stay above or below a bid
-    "IDEXcontractAddress": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208"
 
 # Running the Bot
 
 To run the bot, just run it via node.js:
 
-`node the_brain.js`
+`yarn start-robot`
 
 This will start the script running using the settings you specified.
 
