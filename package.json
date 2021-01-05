@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "alert-node": "^1.2.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "big-integer": "^1.6.32",
     "big.js": "^5.1.2",
     "ethereumjs-util": "^5.2.0",
